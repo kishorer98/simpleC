@@ -1,24 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rsaeed <rsaeed@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/27 11:34:30 by rsaeed            #+#    #+#             */
-/*   Updated: 2021/10/06 13:48:01 by rsaeed           ###   ########.fr       */
+/*   Created: 2021/09/27 11:26:27 by rsaeed            #+#    #+#             */
+/*   Updated: 2021/09/27 11:26:50 by rsaeed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <stdlib.h>
+
 #include "libft.h"
 
-void	*ft_calloc(size_t count, size_t size)
+int
+	ft_tolower(int c)
 {
-	void	*ret;
-
-	ret = malloc(count * size);
-	if (!ret)
-		return (0);
-	ft_bzero(ret, count * size);
-	return (ret);
+	if (c >= 'A' && c <= 'Z')
+		c += 32;
+	return (c);
 }

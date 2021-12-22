@@ -3,71 +3,89 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jestevam < jestevam@student.42sp.org.br    +#+  +:+       +#+        */
+/*   By: rsaeed <rsaeed@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/23 14:30:27 by jestevam          #+#    #+#             */
-/*   Updated: 2021/08/13 00:58:56 by jestevam         ###   ########.fr       */
+/*   Created: 2021/09/27 11:39:18 by rsaeed            #+#    #+#             */
+/*   Updated: 2021/09/29 14:04:33 by rsaeed           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "libft.h"
+#include <stdlib.h>
 
-#include "../utils.h"
-
-static int	ft_to_positive(int nb, char *rslt, int *count)
+static int	get_size(long n)
 {
-	rslt[0] = '-';
-	*count += 1;
-	if (nb == -2147483648)
+	int		size;
+
+	size = 1;
+	while (n > 9)
 	{
-		rslt[1] = '2';
-		*count += 1;
-		nb = -147483648;
+		size++;
+		n /= 10;
 	}
-	return (nb - nb - nb);
+	return (size);
 }
 
-static int	ft_quantitynum(int nb)
+static long	get_multiplier(int size)
 {
-	int		count;
-	int		pos;
+	long	mult;
 
-	pos = 0;
-	count = 0;
-	if (nb < 0)
+	mult = 1;
+	while (size > 1)
 	{
-		pos = nb - nb - nb;
-		nb = pos;
-		count++;
+		mult *= 10;
+		size--;
 	}
-	if (nb == -2147483648)
-		return (11);
-	while (nb >= 10)
+	return (mult);
+}
+
+static int	check_negative(long *n, char **string, int *i)
+{
+	int		is_negative;
+	int		size;
+
+	is_negative = 0;
+	if (*n < 0)
 	{
-		nb /= 10;
-		count++;
+		*n = *n * -1;
+		*i = *i + 1;
+		is_negative = 1;
 	}
-	return (count + 1);
+	size = get_size(*n);
+	if (is_negative)
+		size++;
+	*string = (char *)malloc(sizeof(char) * (size + 1));
+	if (!*string)
+		return (0);
+	if (is_negative)
+	{
+		*string[0] = '-';
+		return (size - 1);
+	}
+	return (size);
 }
 
 char	*ft_itoa(int n)
 {
-	char	*rslt;
-	int		count;
-	int		firstpos;
+	char	*string;
+	long	multiplier;
+	long	copy;
+	int		size;
+	int		i;
 
-	firstpos = 0;
-	count = ft_quantitynum(n);
-	rslt = malloc(count + 1);
-	if (rslt == NULL)
-		return (NULL);
-	rslt[count] = 0;
-	count--;
-	if (n < 0)
-		n = ft_to_positive(n, rslt, &firstpos);
-	while (count >= firstpos)
+	size = 1;
+	i = 0;
+	copy = (long)n;
+	size = check_negative(&copy, &string, &i);
+	if (!string)
+		return (0);
+	while (size > 0)
 	{
-		rslt[count] = (n % 10) + '0';
-		n /= 10;
-		count--;
+		multiplier = get_multiplier(size);
+		string[i] = copy / multiplier + '0';
+		copy = copy - (multiplier * (string[i] - '0'));
+		size--;
+		i++;
 	}
-	return (rslt);
+	string[i] = '\0';
+	return (string);
 }
