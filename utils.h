@@ -4,8 +4,8 @@
 # define WIDTH_SPT 50
 # define HEIGHT_SPT 50
 
-# include "mlx_linux/mlx.h"
-# include "gnl/get_next_line.h"
+# include "mlx/mlx.h"
+# include "GNL/get_next_line.h"
 # include <unistd.h>
 # include <fcntl.h>
 # include <stdio.h>
