@@ -2,7 +2,7 @@ PATH_GAME = ./main/
 PATH_GNL = ./GNL/
 PATH_UTILS = ./UTS/
 PATH_MAP = ./wmap/
-PATH_MLX = ./mlx_linux/
+PATH_MLX = ./mlx/
 PATH_OBJ = ./OBJ/
 SRC = ./%.c
 
